@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <!-- Subtle circular backdrop for high contrast in both dark and light browser tabs -->
+  <rect width="48" height="48" rx="12" fill="#1a1a1a"/>
+  
+  <!-- Architectural Luxury Villa / House Silhouette in Warm Gold (#c9a96e) -->
+  <g stroke="#c9a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Roof line with modern architectural overhang -->
+    <path d="M6 22L24 8L42 22"/>
+    
+    <!-- Main Villa structure -->
+    <path d="M11 18.5V38C11 39.1 11.9 40 13 40H35C36.1 40 37 39.1 37 38V18.5"/>
+    
+    <!-- Grand Entryway / Door -->
+    <path d="M20 40V26C20 24.9 20.9 24 22 24H26C27.1 24 28 24.9 28 26V40"/>
+    
+    <!-- Chimney / High-ceiling modern accent -->
+    <path d="M33 15V11H37V18"/>
+    
+    <!-- Upper Level Architectural Window -->
+    <circle cx="24" cy="17" r="2.5" fill="#c9a96e"/>
+  </g>
+</svg>
