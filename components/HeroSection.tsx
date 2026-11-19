@@ -17,70 +17,105 @@ export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
 
-  const { tag, title, description, videoSrc, primaryButton, secondaryButton } =
-    siteData.hero;
+  const { tag, title, description, videoSrc, localVideoSrc, primaryButton, secondaryButton } =
+    siteData.hero as any;
 
-  // Handle video loading & preloader completion
+  // Initialize and unlock video decoder for modern browsers (Safari/Chrome autoplay & seek policy)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.defaultMuted = true;
     video.muted = true;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
 
-    const handleLoadedData = () => {
+    // Attempt zero-volume play/pause to unlock seek decoder
+    const unlockDecoder = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.then(() => {
+          video.pause();
+        }).catch(() => {
+          // Fallback: unlock on first interaction
+          const onFirstInteraction = () => {
+            video.play().then(() => video.pause()).catch(() => {});
+            window.removeEventListener("scroll", onFirstInteraction);
+            window.removeEventListener("touchstart", onFirstInteraction);
+            window.removeEventListener("click", onFirstInteraction);
+          };
+          window.addEventListener("scroll", onFirstInteraction, { once: true, passive: true });
+          window.addEventListener("touchstart", onFirstInteraction, { once: true, passive: true });
+          window.addEventListener("click", onFirstInteraction, { once: true, passive: true });
+        });
+      }
+    };
+
+    unlockDecoder();
+
+    const handleReady = () => {
       setIsLoaded(true);
+      ScrollTrigger.refresh();
     };
 
     if (video.readyState >= 2) {
-      setIsLoaded(true);
+      handleReady();
     } else {
-      video.addEventListener("loadeddata", handleLoadedData, { once: true });
+      video.addEventListener("loadeddata", handleReady, { once: true });
+      video.addEventListener("canplay", handleReady, { once: true });
     }
 
+    // Safety fallback: dismiss preloader after 2.5s even if network is slow
     const fallbackTimer = setTimeout(() => {
       setIsLoaded(true);
-    }, 8000);
+      ScrollTrigger.refresh();
+    }, 2500);
 
     return () => {
-      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("loadeddata", handleReady);
+      video.removeEventListener("canplay", handleReady);
       clearTimeout(fallbackTimer);
     };
   }, []);
 
-  // GSAP ScrollTrigger video scrub setup
+  // GSAP ScrollTrigger video scrub setup (instant setup with dynamic updates)
   useEffect(() => {
-    if (!isLoaded) return;
     const video = videoRef.current;
     const container = containerRef.current;
     if (!video || !container) return;
 
-    let triggerInstance: ScrollTrigger | null = null;
-
-    const initScrollTrigger = () => {
-      triggerInstance = ScrollTrigger.create({
-        trigger: container,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5,
-        onUpdate: (self) => {
-          if (video.duration && !isNaN(video.duration)) {
-            video.currentTime = video.duration * self.progress;
+    const trigger = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.5,
+      onUpdate: (self) => {
+        if (video.duration && !isNaN(video.duration) && video.duration > 0) {
+          const targetTime = video.duration * self.progress;
+          const v = video as any;
+          if (typeof v.fastSeek === "function") {
+            try {
+              v.fastSeek(targetTime);
+            } catch {
+              v.currentTime = targetTime;
+            }
+          } else {
+            v.currentTime = targetTime;
           }
-        },
-      });
-    };
+        }
+      },
+    });
 
-    if (video.readyState >= 1) {
-      initScrollTrigger();
-    } else {
-      video.addEventListener("loadedmetadata", initScrollTrigger, { once: true });
-    }
+    const handleMetadata = () => {
+      ScrollTrigger.refresh();
+    };
+    video.addEventListener("loadedmetadata", handleMetadata, { once: true });
 
     return () => {
-      if (triggerInstance) triggerInstance.kill();
+      trigger.kill();
+      video.removeEventListener("loadedmetadata", handleMetadata);
     };
-  }, [isLoaded]);
+  }, []);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#")) {
@@ -108,7 +143,12 @@ export default function HeroSection() {
               animate={isLoaded ? { opacity: 0, y: -20 } : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               onAnimationComplete={() => {
-                if (isLoaded) setShowLoader(false);
+                if (isLoaded) {
+                  setShowLoader(false);
+                  setTimeout(() => {
+                    ScrollTrigger.refresh();
+                  }, 150);
+                }
               }}
             >
               <div className="relative">
@@ -148,15 +188,18 @@ export default function HeroSection() {
           aria-label="Hero section"
           className="sticky top-0 overflow-hidden flex flex-col justify-between w-full h-svh"
         >
-          {/* Background Video */}
+          {/* Background Video with global CDN Range support and local fallback */}
           <video
             ref={videoRef}
-            src={videoSrc}
             muted
             playsInline
             preload="auto"
+            crossOrigin="anonymous"
             className="absolute inset-0 w-full h-full object-cover"
-          />
+          >
+            <source src={videoSrc} type="video/mp4" />
+            {localVideoSrc && <source src={localVideoSrc} type="video/mp4" />}
+          </video>
 
           {/* Dark Overlay */}
           <div className="absolute inset-0 bg-black/30" aria-hidden="true" />

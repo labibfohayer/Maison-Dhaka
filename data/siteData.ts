@@ -41,7 +41,8 @@ export const siteData = {
     tag: "Maison Dhaka Premium Real Estate",
     title: "Live Where the Sun Meets the Sea",
     description: "Exclusive beachfront villas and luxury apartments on the Costa del Sol. Your Mediterranean dream, delivered turnkey.",
-    videoSrc: "/assets/hero.mp4",
+    videoSrc: "https://storage.googleapis.com/webild/default/templates/luxury-real-estate/hero.mp4",
+    localVideoSrc: "/assets/hero.mp4",
     primaryButton: {
       text: "View Properties",
       href: "#properties",
