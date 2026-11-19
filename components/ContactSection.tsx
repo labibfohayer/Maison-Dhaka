@@ -44,7 +44,7 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       aria-label="Contact section"
-      className="relative overflow-hidden h-[90svh] my-20"
+      className="relative overflow-hidden min-h-[90svh] h-auto md:h-[90svh] my-12 md:my-20 py-12 md:py-0"
     >
       {/* Parallax Background */}
       <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
@@ -59,14 +59,14 @@ export default function ContactSection() {
       </motion.div>
 
       {/* Floating Glassmorphic Contact Card */}
-      <div className="relative z-10 flex items-center h-full px-8 md:px-12">
-        <div className="mx-auto w-full max-w-6xl px-6">
+      <div className="relative z-10 flex items-center h-full px-4 sm:px-8 md:px-12">
+        <div className="mx-auto w-full max-w-6xl px-2 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full md:w-1/2 lg:w-5/12 rounded border border-white/10 bg-white/10 backdrop-blur-xl p-6 md:p-10 shadow-2xl"
+            className="w-full md:w-1/2 lg:w-5/12 rounded border border-white/10 bg-white/10 backdrop-blur-xl p-5 sm:p-6 md:p-10 shadow-2xl"
           >
             <h2 className="mb-6 text-2xl md:text-3xl 2xl:text-4xl font-semibold text-white font-serif">
               {title}
@@ -120,8 +120,8 @@ export default function ContactSection() {
             </form>
 
             {/* Concierge Agent Contact Bar */}
-            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-6">
-              <p className="text-base text-white/75 font-sans">{footerText}</p>
+            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-white/10 pt-6">
+              <p className="text-sm sm:text-base text-white/75 font-sans">{footerText}</p>
               <a
                 href={footerLink.href}
                 className="flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-sm p-1.5 pr-5 text-sm font-medium text-white whitespace-nowrap transition-colors hover:bg-white/25 font-sans"

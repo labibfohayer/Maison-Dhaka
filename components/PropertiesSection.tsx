@@ -10,13 +10,13 @@ export default function PropertiesSection() {
   const { tag, title, description, items } = siteData.properties;
 
   return (
-    <section aria-label="Features section" className="py-20">
+    <section aria-label="Features section" className="py-12 md:py-20">
       <div className="flex flex-col gap-8 md:gap-10">
         {/* Section Header */}
         <div className="flex flex-col items-center w-full max-w-6xl px-6 mx-auto gap-2">
           {tag && (
             <AppearOnScroll variant="fade">
-              <div className="px-3 py-1 mb-1 text-sm card rounded w-fit">
+              <div className="px-3 py-1 mb-1 text-xs sm:text-sm card rounded w-fit">
                 <p className="font-sans text-foreground">{tag}</p>
               </div>
             </AppearOnScroll>
@@ -26,7 +26,7 @@ export default function PropertiesSection() {
             text={title}
             variant="fade"
             tag="h2"
-            className="md:max-w-8/10 text-3xl md:text-5xl 2xl:text-6xl leading-[1.15] font-semibold text-center text-balance font-serif"
+            className="w-full md:max-w-8/10 text-2xl sm:text-3xl md:text-5xl 2xl:text-6xl leading-[1.15] font-semibold text-center text-balance font-serif"
           />
 
           {description && (
@@ -34,13 +34,13 @@ export default function PropertiesSection() {
               text={description}
               variant="fade"
               tag="p"
-              className="md:max-w-7/10 text-base md:text-lg 2xl:text-xl leading-snug text-center text-balance font-sans text-foreground"
+              className="w-full md:max-w-7/10 text-sm sm:text-base md:text-lg 2xl:text-xl leading-snug text-center text-balance font-sans text-foreground"
             />
           )}
         </div>
 
         {/* 2-Column Property Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-6xl px-6 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-5 w-full max-w-6xl px-6 mx-auto">
           {items.map((villa, index) => (
             <AppearOnScroll
               key={villa.id || villa.title}

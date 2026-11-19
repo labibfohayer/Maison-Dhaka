@@ -19,11 +19,11 @@ export default function Footer() {
   };
 
   return (
-    <footer data-section="footer" aria-label="Site footer" className="w-full pt-20 pb-10">
+    <footer data-section="footer" aria-label="Site footer" className="w-full pt-12 md:pt-20 pb-8 md:pb-10">
       <div className="w-full max-w-6xl px-6 mx-auto">
         <div className="pt-10 border-t border-foreground/15">
           {/* 4 Navigation Columns */}
-          <div className="w-full flex flex-wrap justify-between gap-y-10 mb-10">
+          <div className="w-full flex flex-wrap justify-between gap-y-8 md:gap-y-10 mb-10">
             {columns.map((column, idx) => (
               <AppearOnScroll
                 key={column.title}
@@ -40,7 +40,7 @@ export default function Footer() {
                       key={item.label}
                       href={item.href}
                       onClick={(e) => handleLinkClick(e, item.href)}
-                      className="text-base hover:opacity-75 transition-opacity cursor-pointer font-sans"
+                      className="text-sm sm:text-base hover:opacity-75 transition-opacity cursor-pointer font-sans"
                     >
                       {item.label}
                     </a>
@@ -54,9 +54,9 @@ export default function Footer() {
           <div className="w-full h-px bg-foreground/20" />
 
           {/* Bottom Copyright & Location Bar */}
-          <div className="w-full flex items-center justify-between pt-5">
-            <span className="text-sm opacity-50 font-sans">{leftText}</span>
-            <span className="text-sm opacity-50 font-sans">{rightText}</span>
+          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 text-center sm:text-left">
+            <span className="text-xs sm:text-sm opacity-50 font-sans">{leftText}</span>
+            <span className="text-xs sm:text-sm opacity-50 font-sans">{rightText}</span>
           </div>
         </div>
       </div>

@@ -51,18 +51,18 @@ export default function Navbar() {
         <a
           href="/"
           className={clsx(
-            "text-xl font-medium transition-colors duration-300",
+            "text-lg sm:text-xl font-medium transition-colors duration-300 truncate",
             isOpen ? "text-background" : "text-white"
           )}
         >
           {logo}
         </a>
 
-        <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4">
+        <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4 shrink-0">
           <a
             href={ctaButton.href}
             onClick={(e) => handleLinkClick(e, ctaButton.href)}
-            className="flex items-center justify-center h-10 px-6 text-sm rounded-lg cursor-pointer btn-primary bg-primary text-primary-foreground"
+            className="flex items-center justify-center h-9 sm:h-10 px-4 sm:px-6 text-xs sm:text-sm rounded-lg cursor-pointer btn-primary bg-primary text-primary-foreground whitespace-nowrap"
           >
             {ctaButton.text}
           </a>
@@ -70,7 +70,7 @@ export default function Navbar() {
           <button
             type="button"
             aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="relative flex items-center justify-center size-10 rounded-lg cursor-pointer bg-primary text-primary-foreground focus:outline-none"
+            className="relative flex items-center justify-center size-9 sm:size-10 rounded-lg cursor-pointer bg-primary text-primary-foreground focus:outline-none shrink-0"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span
@@ -116,11 +116,11 @@ export default function Navbar() {
                     : `${(navItems.length - 1 - index) * 0.05}s`,
                 }}
               >
-                <span className="text-5xl md:text-8xl font-medium text-background group-hover:ml-4 transition-[margin] duration-300">
+                <span className="text-4xl sm:text-6xl md:text-8xl font-medium text-background group-hover:ml-4 transition-[margin] duration-300">
                   {item.name}
                 </span>
                 <ArrowUpRight
-                  className="h-12 md:h-24 w-auto text-background group-hover:rotate-45 group-hover:mr-4 transition-all duration-300"
+                  className="h-8 w-8 sm:h-12 sm:w-12 md:h-24 md:w-auto text-background group-hover:rotate-45 group-hover:mr-4 transition-all duration-300"
                   strokeWidth={1.5}
                 />
               </a>
