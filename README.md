@@ -1,5 +1,7 @@
 # 🏰 Maison Dhaka — Ultra-Luxury Real Estate & Architectural Living
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-maisondhaka.pages.dev-success?style=for-the-badge&logo=cloudflare&logoColor=white)](https://maisondhaka.pages.dev/)
+
 > An ultra-premium, interactive luxury real estate portfolio and showcase application for **Maison Dhaka**, located in Mohakhali DOHS, Dhaka. Engineered with Next.js 15, Tailwind CSS, TypeScript, Framer Motion, GSAP ScrollTrigger, and Lenis Smooth Scroll.
 
 ---
@@ -47,7 +49,7 @@ npm install
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) for local development, or access the live production deployment at **[maisondhaka.pages.dev](https://maisondhaka.pages.dev/)**.
 
 ### 4. Build for production
 ```bash
